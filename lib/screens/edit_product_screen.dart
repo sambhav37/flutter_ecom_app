@@ -97,7 +97,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           .updateProduct(_editedProduct.id, _editedProduct);
       Navigator.of(context).pop(); // make the page go away after this
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Saved Successfully !")));
+          .showSnackBar(SnackBar(content: Text("Edited Successfully !")));
     } else {
       Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
       Navigator.of(context).pop(); // make the page go away after this
@@ -240,6 +240,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     focusNode: _imageUrlFocusNode,
                     onFieldSubmitted: (_) {
                       _saveForm();
+                    },
+                    onEditingComplete: () {
+                      setState(() {});
                     },
                     validator: (value) {
                       if (value.isEmpty) {

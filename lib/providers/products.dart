@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import './product.dart';
 
 class Products with ChangeNotifier {
@@ -53,24 +54,40 @@ class Products with ChangeNotifier {
   // telling the listeners about a change
 
   void addProduct(Product product) {
-    final newProduct = Product(
-      title: product.title,
-      imageUrl: product.imageUrl,
-      price: product.price,
-      description: product.description,
-      id: DateTime.now().toString(),
-    );
-    _items.add(newProduct);
-    // _items.insert(0, newProduct);   // adding i the beginning 
-    notifyListeners(); // widgets will rebuilt
+    final url = Uri.https(
+        'shop-app-1390b-default-rtdb.asia-southeast1.firebasedatabase.app',
+        '/products.json');
+    // const url = 'https://shop-app-1390b-default-rtdb.asia-southeast1.firebasedatabase.app/' + 'products.json';
+
+    http
+        .post(
+      url,
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'imageUrl': product.imageUrl,
+        'price': product.price,
+        'isFavourite': product.isFavourite,
+      }),
+    )
+        .then((response) {
+      final newProduct = Product(
+        title: product.title,
+        imageUrl: product.imageUrl,
+        price: product.price,
+        description: product.description,
+        id: json.decode(response.body)['name'],
+      );
+      _items.add(newProduct);
+      // _items.insert(0, newProduct);   // adding i the beginning
+      notifyListeners(); // widgets will rebuilt
+    });
   }
 
-
   void updateProduct(String id, Product newProduct) {
-
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
 
-    if(prodIndex >= 0){
+    if (prodIndex >= 0) {
       _items[prodIndex] = newProduct;
       notifyListeners();
     } else {
