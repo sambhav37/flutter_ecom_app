@@ -52,8 +52,16 @@ class Products with ChangeNotifier {
 
   // telling the listeners about a change
 
-  void addProduct() {
-    // _items.add();
-    notifyListeners(); // widgets will rebuilt 
+  void addProduct(Product product) {
+    final newProduct = Product(
+      title: product.title,
+      imageUrl: product.imageUrl,
+      price: product.price,
+      description: product.description,
+      id: DateTime.now().toString(),
+    );
+    _items.add(newProduct);
+    // _items.insert(0, newProduct);   // adding i the beginning 
+    notifyListeners(); // widgets will rebuilt
   }
 }

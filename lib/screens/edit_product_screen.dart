@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../providers/product.dart';
+import '../providers/products.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
@@ -53,10 +55,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
       return;
     }
     _form.currentState.save(); // this will run all the onSaved methods
-    print(_editedProduct.title);
-    print(_editedProduct.description);
-    print(_editedProduct.price);
-    print(_editedProduct.imageUrl);
+    // print(_editedProduct.title);
+    // print(_editedProduct.description);
+    // print(_editedProduct.price);
+    // print(_editedProduct.imageUrl);
+    Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+    Navigator.of(context).pop(); // make the page go away after this
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Saved Successfully !")));
   }
 
   @override
