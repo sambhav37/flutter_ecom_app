@@ -64,4 +64,18 @@ class Products with ChangeNotifier {
     // _items.insert(0, newProduct);   // adding i the beginning 
     notifyListeners(); // widgets will rebuilt
   }
+
+
+  void updateProduct(String id, Product newProduct) {
+
+    final prodIndex = _items.indexWhere((prod) => prod.id == id);
+
+    if(prodIndex >= 0){
+      _items[prodIndex] = newProduct;
+      notifyListeners();
+    } else {
+      print('...');
+    }
+
+  }
 }
