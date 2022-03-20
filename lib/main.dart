@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      builder: (ctx) => Products(),     
+      create: (ctx) => Products(),  
       // provides new instance to all child widgets who are listening, when we change somethig and call notifylisteners they will rebuilt
       child: MaterialApp(
         title: 'MyShop',
