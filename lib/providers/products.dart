@@ -81,8 +81,10 @@ class Products with ChangeNotifier {
       _items.add(newProduct);
       // _items.insert(0, newProduct);   // adding i the beginning
       notifyListeners(); // widgets will rebuilt
+    }).catchError((error){
+      print(error);
+      throw error;
     });
-    return Future.value();
   }
 
   void updateProduct(String id, Product newProduct) {
