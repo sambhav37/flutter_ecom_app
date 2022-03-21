@@ -53,13 +53,13 @@ class Products with ChangeNotifier {
 
   // telling the listeners about a change
 
-  void addProduct(Product product) {
+  Future<void> addProduct(Product product) {
     final url = Uri.https(
         'shop-app-1390b-default-rtdb.asia-southeast1.firebasedatabase.app',
         '/products.json');
     // const url = 'https://shop-app-1390b-default-rtdb.asia-southeast1.firebasedatabase.app/' + 'products.json';
 
-    http
+    return http
         .post(
       url,
       body: json.encode({
@@ -82,6 +82,7 @@ class Products with ChangeNotifier {
       // _items.insert(0, newProduct);   // adding i the beginning
       notifyListeners(); // widgets will rebuilt
     });
+    return Future.value();
   }
 
   void updateProduct(String id, Product newProduct) {
